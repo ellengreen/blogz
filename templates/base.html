@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Blog</title>
-        <!--link stylesheet-->
+        <title>{{title}}</title>
+        <style>
+            .error {
+            color: red;}
+        </style>
     </head>
-    <body>
-        <nav>
-            
-        </nav>
+<body>
+        <a href= "/blog">Blog Entries</a>
+        <a href="/newpost">Add a New Entry</a>
 
-        {% block content %}
-        {% end block %}
-    </body>
+    {% block content %}
+    {% endblock %}
+
+</body>
 </html>
