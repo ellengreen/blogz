@@ -31,7 +31,7 @@ def post_id():
         return render_template('blog.html', blogs=blogs)
     else:
         single_post = Blog.query.filter_by(id=id).first()
-        print("individual=",single_post.title,single_post.body)
+        print(single_post.title,single_post.body)
     return render_template('single_post.html', single_post=single_post)
 
 @app.route('/newpost', methods=['POST', 'GET'])
