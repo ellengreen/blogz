@@ -5,11 +5,11 @@
     <h1 align = 'center'>Build-A-Blog</h1>
     
 
-        <ul style="list-style-type: none;">
+        <ul>
             {% for blog in blogs %}
             <li><h3><a href="/blog?id={{blog.id}}">{{blog.title}}</a></h3>
               
-                {{blog.body}}
+            {{blog.body}}
 
             </li>
             {% endfor %}

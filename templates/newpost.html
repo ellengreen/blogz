@@ -1,21 +1,18 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1 align = "center">Add A Blog Entry</h1>
-    <form action="/newpost" method="post">
-        <label>
-            New Post Title:<br>
+    <h1>Add A Blog Entry</h1>
+    <form action="/newpost" method="POST">
+        <label>New Post Title:
             <input type="text" name="title" />
-            <p class = "error">{{title_error}}</p>
-        
-            
-        </label><br>
-        <label>
-            Write New Post Here:<br>
-            <textarea name= 'body'></textarea><br>
+            <p class="error">{{title_error}}</p>
+        </label>
+        <br>
+        <label>Write New Post Here:
+            <textarea name= 'body'></textarea>
             <p class="error">{{body_error}}</p>
         </label>
-
-        <input type="submit" value='Add Entry' />
+        <br>
+        <input type="submit" value='Add Entry'/>
     </form>
 {% endblock %}

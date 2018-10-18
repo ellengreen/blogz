@@ -19,21 +19,17 @@ class Blog(db.Model):
 
 @app.route('/')
 def index():
+    #entries = Blog.query.order_by(desc(Blog.id)).all()
+    return redirect('/blog')
+   # return render_template('blog.html', entries=entries)
 
-    entries = Blog.query.order_by(desc(Blog.id)).all()
-
-    return render_template('blog.html', entries=entries)
-
-
-
-@app.route('/blog',methods= ['GET'])
-def blogid():
+@app.route('/blog')
+def post_id():
     id = request.args.get('id')
     if id is None:
         blogs = Blog.query.all()
-        return render_template('blog.html', blogs = blogs)
+        return render_template('blog.html', blogs=blogs)
     else:
-
         single_post = Blog.query.filter_by(id=id).first()
         print("individual=",single_post.title,single_post.body)
     return render_template('single_post.html', single_post=single_post)
@@ -45,13 +41,13 @@ def new_post():
         title =request.form['title']
         body = request.form['body']
 
-        error_title = ""
-        error_body = ""
+        title_error = ""
+        body_error = ""
 
         if title == "" or body == "":
-            error_title = "Must add a title"
-            error_body = "Must add some text to the body"
-            return render_template('newpost.html',title_error=error_title, body_error=error_body)
+            title_error = "Must add a title"
+            body_error = "Must add some text to the body"
+            return render_template('newpost.html',title_error=title_error, body_error=body_error)
         else:
             new_post = Blog(title, body)
             db.session.add(new_post)
