@@ -19,9 +19,9 @@ class Blog(db.Model):
 
 @app.route('/')
 def index():
-    #entries = Blog.query.order_by(desc(Blog.id)).all()
-    return redirect('/blog')
-   # return render_template('blog.html', entries=entries)
+    entries = Blog.query.order_by(desc(Blog.id)).all()
+    #return redirect('/blog')
+    return render_template('blog.html', entries=entries)
 
 @app.route('/blog')
 def post_id():
@@ -44,8 +44,10 @@ def new_post():
         title_error = ""
         body_error = ""
 
-        if title == "" or body == "":
+        if title == "":
             title_error = "Must add a title"
+            return render_template('newpost.html',title_error=title_error, body_error=body_error)
+        if body == "":
             body_error = "Must add some text to the body"
             return render_template('newpost.html',title_error=title_error, body_error=body_error)
         else:
@@ -54,7 +56,7 @@ def new_post():
             db.session.commit()
             id = new_post.id
             return redirect('/blog?id='+ str(id))
-   
+    
     return render_template('newpost.html')
 
 
