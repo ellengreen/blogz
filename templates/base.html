@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <style>
+            .error {
+                color: red;
+            }
+        </style>
         <title>{{title}}</title>
     </head>
 <body>
@@ -9,7 +14,13 @@
         <a href="/login">Login</a>
         <a href='/logout'>Logout</a>
         <a href='/signup'>Signup</a>
-        
+    {% with messages = get_flashed_messages(with_categories=True)%}
+        {% for category, message in messages%}
+
+            <li class="{{category}}">{{message}}</li>
+
+        {% endfor%}
+    {% endwith %}   
 
     {% block content %}
     {% endblock %}

@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, render_template
+from flask import Flask, request, redirect, render_template, session, flash
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import desc
 
@@ -7,8 +7,7 @@ app.config['DEBUG'] = True
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://blogz:ellen@localhost:8889/blogz'
 app.config['SQLALCHEMY_ECHO'] = True
 db = SQLAlchemy(app) 
-#secret key
-
+app.secret_key = 'thisisasecretkey'
 
 
 class Blog(db.Model):
@@ -18,10 +17,10 @@ class Blog(db.Model):
     body = db.Column(db.String(120))
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
-    def __init__(self,title,body):
+    def __init__(self, title, body, owner):
         self.title = title
         self.body = body
-        self.owner_id = owner
+        self.owner = owner
 
 class User(db.Model):
 
@@ -35,12 +34,18 @@ class User(db.Model):
         self.password = password
 
 
+@app.before_request
+def require_login():
+    allowed_routes = ['login', 'signup', 'blog', 'single_post', 'index']
+    if request.endpoint not in allowed_routes and 'username' not in session:
+        return redirect('/login')
+
 
 @app.route('/')
 def index():
-    entries = Blog.query.order_by(desc(Blog.id)).all()
-    return render_template('blog.html', entries=entries)
 
+    users = User.query.all()
+    return render_template('index.html', users=users)
 
 
 @app.route('/blog')
@@ -55,13 +60,14 @@ def post_id():
     return render_template('single_post.html', single_post=single_post)
 
 
-
 @app.route('/newpost', methods=['POST', 'GET'])
 def new_post():
 
     if request.method == 'POST':
-        title =request.form['title']
+        title = request.form['title']
         body = request.form['body']
+        owner = User.query.filter_by(username=session['username']).first()
+
 
         title_error = ""
         body_error = ""
@@ -73,22 +79,13 @@ def new_post():
             body_error = "Must add some text to the body"
             return render_template('newpost.html',title_error=title_error, body_error=body_error)
         else:
-            new_post = Blog(title, body)
+            new_post = Blog(title, body, owner)
             db.session.add(new_post)
             db.session.commit()
             id = new_post.id
             return redirect('/blog?id='+ str(id))
     
     return render_template('newpost.html')
-
-
-
-@app.before_request
-def require_login():
-    allowed_routes = ['login', 'signup', 'blog', 'single_post', 'index']
-    if request.endpoint not in allowed_routes and 'username' not in session:
-        return redirect('/login')
-
 
 
 @app.route('/login', methods=['POST', 'GET'])
@@ -100,29 +97,67 @@ def login():
 
         if user and user.password == password:
             session['username'] = username
+            flash('Logged in!')
             return redirect ('/newpost')
-        
+        else:
+            flash('Error!', 'error')
+            return render_template('login.html')
+
     return render_template('login.html')
 
+def blank(form):
+    if form == "":
+        return True
+    else:
+        return False
 
+def valid_length(data):
+    if len(data) <3:
+        return False
+    else:
+        return True
 
-@app.route('/signup')
+@app.route('/signup', methods=['POST', 'GET'])
 def signup():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
         verify = request.form['verify']
-    
+
+        user_error = ''
+        pass_error = ''
+        verify_error = ''
         existing_user = User.query.filter_by(username=username).first()
+
+        if not valid_length(username):
+            user_error = 'Username must be more than 3 characters'
+        if not valid_length(password):
+            pass_error = 'Password must be more than 3 characters'
+        
+        if password != verify:
+            verify_error = 'Passwords do not match'
+        
+        if blank(username):
+            user_error = 'Cannot leave blank'
+        if blank(password):
+            pass_error = 'Cannot leave blank'
+        if blank(verify):
+            verify_error = 'Cannot leave blank'
+
+        if user_error or pass_error or verify_error:
+            return render_template('signup.html', user_error=user_error, pass_error=pass_error, verify_error=verify_error)
+
+       
         if not existing_user:
             new_user = User(username, password)
             db.session.add(new_user)
             db.session.commit()
             session['username'] = username
-            return redirect('/')
+            return redirect('/newpost')
+        else:
+           user_error = 'Username already taken'
     
     return render_template('signup.html')
-
 
 
 @app.route('/logout')

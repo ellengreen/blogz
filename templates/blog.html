@@ -1,7 +1,11 @@
 {% extends "newpost.html" %}
 
 {% block content %}
+
+    {% if blogs|length == 0 %}
+        <h3>No blogs made yet</h3>
     
+    {% else %}
     <h1 align = 'center'>Build-A-Blog</h1>
     
 
@@ -14,5 +18,5 @@
             </li>
             {% endfor %}
         </ul>
-   
+    {% endif %}
 {% endblock %}

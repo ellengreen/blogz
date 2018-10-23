@@ -2,12 +2,13 @@
 
 {% block content %}
 <h1>Login</h1>
+<p>If you don't have an account, you may <a href="/signup">sign up</a> for one.</p>
 <form action='/login' method='POST'>
     <table>
         <tr>
             <td><label for 'username'>Username</label></td>
             <td>
-                <input name='username' type='name' value='{{username}}'>
+                <input name='username' type='text' value='{{username}}'>
             </td>
         </tr>
         <tr>
