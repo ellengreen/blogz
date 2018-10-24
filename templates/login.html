@@ -6,19 +6,29 @@
 <form action='/login' method='POST'>
     <table>
         <tr>
-            <td><label for 'username'>Username</label></td>
             <td>
-                <input name='username' type='text' value='{{username}}'>
+              <label for="username">Username</label>
+              <span class="error">{{user_error}}</span>
             </td>
         </tr>
         <tr>
-            <td><label for='password'>Password</label></td>
             <td>
-                <input name='password' type='password'>
+                <input name="username" type="text" value="{{ username }}">
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <label for="password">Password</label>
+              <span class="error">{{pass_error}}</span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input name="password" type="password">
             </td>
         </tr>
     </table>
-    <input type='submit' value='Login'>
+    <input type="submit" value="Login">
 </form>
 
 {% endblock %}

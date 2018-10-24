@@ -101,6 +101,9 @@ def new_post():
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
+    user_error = ''
+    pass_error = ''
+
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -108,12 +111,18 @@ def login():
 
         if user and user.password == password:
             session['username'] = username
-            flash('Logged in!')
+            flash(username + 'Logged in!')
             return redirect ('/newpost')
         else:
-            flash('Password is incorrect, or user does not exist', 'error')
-            return render_template('login.html')
-
+            if not user:
+                user_error = 'User does not exist'
+            elif not user.password == password:
+                pass_error = 'Password is incorrect'
+            return render_template('login.html',
+            username=username,
+            user_error=user_error,
+            pass_error=pass_error)
+            
     return render_template('login.html')
 
 def blank(form):
