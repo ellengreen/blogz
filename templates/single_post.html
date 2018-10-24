@@ -4,8 +4,8 @@
 
 <form action="/blog?id={{blog_post.id}}">
     <h2>{{blog_post.title}}</h2>
-    <p>{{blog_post.body}}</p>
-    <p>Written by <a href="/blog?user={{blog_post.owner.username}}">{{blog_post.owner.username}}</a></p>
+    <p class='lead'>{{blog_post.body}}</p>
+    <p><small><em>Created by <a href="/blog?user={{blog_post.owner.username}}">{{blog_post.owner.username}}</a></small></em></p>
 </form>
 
 {% endblock %}

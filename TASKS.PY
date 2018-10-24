@@ -44,3 +44,8 @@ Use bootstrap on navbar and div separation
 Hide "new post" and "logout" if not logged in
 Add 'Blog has been posted' success banner when applicable
 Add Edit/Remove button to user ONLY FOR THEIR BLOGS
+
+
+
+#TODO!!!!!
+Not getting blank body error on Add New Post

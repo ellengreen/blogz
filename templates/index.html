@@ -2,7 +2,7 @@
 
 {% block content %}
       <div class="index">
-        <h1>Visitors</h1>
+        <h1>Blog Authors</h1>
         <hr>
         {% for user in users %}
         <p class="users"><a href="/blog?userid={{user.id}}">{{ user.username }}</a></p>

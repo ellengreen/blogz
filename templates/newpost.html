@@ -1,6 +1,31 @@
 {% extends "base.html" %}
 
 {% block content %}
+
+<form action='/newpost' method='POST'>
+        <h1>Add A Blog Entry</h1>
+        <fieldset>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">New Blog Title:</label>
+              <p class="error">{{title_error}}</p>
+              <input class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  name='title' type="text">
+          
+          </div>
+     
+          <div class="form-group">
+            <label for="exampleTextarea">Write New Post:</label>
+            <p class="error">{{body_error}}</p>
+            <textarea name='body' class="form-control" id="exampleTextarea" rows="3"></textarea>
+            
+            
+          </div>
+          
+          <button type="submit" class="btn btn-primary">Submit Your Blog Post!</button>
+        </fieldset>
+      </form>
+
+      <!--
     <h1>Add A Blog Entry</h1>
     <form action="/newpost" method="POST">
         <label>New Post Title:
@@ -11,8 +36,6 @@
         <label>Write New Post Here:
             <textarea name= 'body'></textarea>
             <p class="error">{{body_error}}</p>
-        </label>
-        <br>
-        <input type="submit" value='Add Entry'/>
-    </form>
+        </label>-->
+       
 {% endblock %}

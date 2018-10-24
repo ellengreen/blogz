@@ -2,16 +2,16 @@
 
 {% block content %}
 
-    <h1>Build a Blog</h1>
+    <h1>Blogz</h1>
     
     {% if blog_post|length == 0 %}
     <p>No posts yet</p>
     {% else %}
 
         {% for blog in blog_post %}
-            <a href="/blog?id={{blog.id}}"><h2>{{blog.title}}</h2></a>
-            <p>{{blog.body}}</p>
-            <p>Written by <a href="/blog?user={{blog.owner.username}}">{{blog.owner.username}}</a></p>
+            <a href="/blog?id={{blog.id}}"><h3>{{blog.title}}</h3></a>
+            <p class='lead'>{{blog.body}}</p>
+            <p><small><em>Created By <a href="/blog?user={{blog.owner.username}}">{{blog.owner.username}}</a></em></small></p>
             <hr />
 
         {% endfor %}

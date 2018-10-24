@@ -83,10 +83,10 @@ def new_post():
         title_error = ""
         body_error = ""
 
-        if title == "":
+        if blank(title):
             title_error = "Must add a title"
             return render_template('newpost.html',title_error=title_error, body_error=body_error)
-        if body == "":
+        if blank(body):
             body_error = "Must add some text to the body"
             return render_template('newpost.html',title_error=title_error, body_error=body_error)
         else:
@@ -114,6 +114,12 @@ def login():
             flash(username + 'Logged in!')
             return redirect ('/newpost')
         else:
+            if blank(username):
+                user_error = 'Cannot leave blank'
+
+            if blank(password):
+                pass_error = 'Cannot leave blank'
+
             if not user:
                 user_error = 'User does not exist'
             elif not user.password == password:
