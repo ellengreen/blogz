@@ -3,9 +3,11 @@
 {% block content %}
 
 <form action="/blog?id={{blog_post.id}}">
+    <div class="jumbotron text-center">
     <h2>{{blog_post.title}}</h2>
     <p class='lead'>{{blog_post.body}}</p>
     <p><small><em>Created by <a href="/blog?user={{blog_post.owner.username}}">{{blog_post.owner.username}}</a></small></em></p>
+    </div>
 </form>
 
 {% endblock %}

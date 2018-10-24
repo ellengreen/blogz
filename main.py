@@ -189,7 +189,7 @@ def signup():
 @app.route('/logout')
 def logout():
     del session['username']
-    return redirect('/')
+    return redirect('/blog')
 
 
 if __name__ == '__main__':

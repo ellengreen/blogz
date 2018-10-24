@@ -2,10 +2,18 @@
 
 {% block content %}
       <div class="index">
-        <h1>Blog Authors</h1>
-        <hr>
+        <center>
+          <h1>Blog Authors</h1>
+        </center>
+        
         {% for user in users %}
-        <p class="users"><a href="/blog?userid={{user.id}}">{{ user.username }}</a></p>
+
+        <div class="jumbotron text-center">
+          <p class="users"><a href="/blog?userid={{user.id}}">{{ user.username }}</a></p>
+        </div>
+
         {% endfor %}
+
       </div>
+      
 {% endblock %}

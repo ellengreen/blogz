@@ -39,9 +39,9 @@ Paginate 5 blogs per page
 Add Hashing
 
 Lucas Recommendations
-Add CSS & Bootstrap
-Use bootstrap on navbar and div separation
-Hide "new post" and "logout" if not logged in
+#Add CSS & Bootstrap
+#Use bootstrap on navbar and div separation
+#Hide "new post" and "logout" if not logged in
 Add 'Blog has been posted' success banner when applicable
 Add Edit/Remove button to user ONLY FOR THEIR BLOGS
 
@@ -49,3 +49,4 @@ Add Edit/Remove button to user ONLY FOR THEIR BLOGS
 
 #TODO!!!!!
 Not getting blank body error on Add New Post
+Flash messages: improve CSS, color

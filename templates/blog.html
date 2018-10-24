@@ -2,19 +2,22 @@
 
 {% block content %}
 
-    <h1>Blogz</h1>
+    <center>
+        <h1>Blogz</h1>
+    </center>
     
     {% if blog_post|length == 0 %}
-    <p>No posts yet</p>
+        <p>No Posts Have Been Created</p>
     {% else %}
 
-        {% for blog in blog_post %}
+    {% for blog in blog_post %}
+        <div class="jumbotron text-center">
             <a href="/blog?id={{blog.id}}"><h3>{{blog.title}}</h3></a>
             <p class='lead'>{{blog.body}}</p>
             <p><small><em>Created By <a href="/blog?user={{blog.owner.username}}">{{blog.owner.username}}</a></em></small></p>
             <hr />
-
-        {% endfor %}
+        </div>
+    {% endfor %}
 
     {% endif %}
  

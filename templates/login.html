@@ -1,31 +1,36 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
+<center>
+    <h1>Login</h1>
+    <p>If you don't have an account, you may <a href="/signup">sign up</a> for one.</p>
+</center>
+
 <form action='/login' method='POST'>
-        <fieldset>
-          <h1>Login</h1>
-          <p>If you don't have an account, you may <a href="/signup">sign up</a> for one.</p>
-          
-          <div class="form-group">
+    <fieldset style='margin: 15px':>
+        <div class="form-group">
             <label for="username">Username</label>
             <input name='username' class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ username }}" placeholder="Username" type="text">
             <span class="text-danger">{{user_error}}</span>
             
-          </div>
-          <div class="form-group">
+        </div>
+        <div class="form-group">
             <label for="password">Password</label>
             <input name='password' class="form-control" id="exampleInputPassword1" placeholder="Password" type="password">
             <span class="text-danger">{{pass_error}}</span>
-          </div>
+        </div>
           
-         
-         
-         
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </fieldset>
-      </form>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </fieldset>
+</form>  
 
-      
+{% endblock %}
+
+
+
+
+
 <!--
 <form action='/login' method='POST'>
     <table>
@@ -55,6 +60,3 @@
     <input type="submit" value="Login">
 </form>
 -->
-<br>
-<br>
-{% endblock %}
