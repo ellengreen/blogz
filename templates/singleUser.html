@@ -1,2 +1,21 @@
-<!--Display only blogs associated with a 
-single given author-->
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1>{{username}}'s Blog Posts</h1>
+    
+    {% if blog_post|length == 0 %}
+    <p>No posts yet</p>
+    {% else %}
+
+        {% for blog in blog_post %}
+            <a href="/blog?id={{blog.id}}"><h2>{{blog.title}}</h2></a>
+            <p>{{blog.body}}</p>
+            <p>Written by <a href="/blog?user={{blog.owner.username}}">{{blog.owner.username}}</a></p>
+            <hr />
+
+        {% endfor %}
+
+    {% endif %}
+ 
+{% endblock %}

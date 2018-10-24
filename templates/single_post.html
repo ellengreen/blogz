@@ -1,7 +1,11 @@
 {% extends "base.html" %}
+
 {% block content %}
-    
-    <h3>{{single_post.title}}</h3>
-    <p>{{single_post.body}}</p>
-    
+
+<form action="/blog?id={{blog_post.id}}">
+    <h2>{{blog_post.title}}</h2>
+    <p>{{blog_post.body}}</p>
+    <p>Written by <a href="/blog?user={{blog_post.owner.username}}">{{blog_post.owner.username}}</a></p>
+</form>
+
 {% endblock %}
