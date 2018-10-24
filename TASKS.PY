@@ -18,7 +18,7 @@ User enters username not in database
     #Redirects to '/newpost' page
     #Username stored in a session
 #Error message for leaving fields blank
-Error message if username already exists
+#Error message if username already exists
 #Error message for non-matching passwords
 #Error message for password/user less than 3char
 #Redirect to '/login' if not logged in (username not in session)
@@ -28,11 +28,11 @@ Error message if username already exists
     #Click on entry, redirect to single_post page showing just that entry
 Logout redirects to '/blog' 
     #'/newpost' redirects to '/login'
-Create page to dynamically display posts of each individual user
-    Written with 'userid' with hyperlink to 'blog?user=userid'
-User on '/', clicks on author's username in list and lands on that user's page
-User on '/blog', clicks on author's username in tagline and lands on that user's page
-User on single_post page, clicks on author's username in tagline and lands on that user's page
+#Create page to dynamically display posts of each individual user
+    #Written with 'userid' with hyperlink to 'blog?user=userid'
+#User on '/', clicks on author's username in list and lands on that user's page
+#User on '/blog', clicks on author's username in tagline and lands on that user's page
+#User on single_post page, clicks on author's username in tagline and lands on that user's page
 
 Bonus
 Paginate 5 blogs per page

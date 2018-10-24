@@ -47,43 +47,28 @@ def index():
     users = User.query.all()
     return render_template('index.html', users=users)
 
-
-
-@app.route('/blog', methods=['GET'])
+@app.route('/blog')
 def blog():
     blog_id = request.args.get('id')
     blog_user = request.args.get('user')
 
-    # renders individual blog entry
     if blog_id:
         blog_post = Blog.query.filter_by(id=blog_id).first()
-        return render_template('single_post.html', title="Blog Entry", blog_post=blog_post)
+        return render_template('single_post.html', 
+        title="Blog Entry", 
+        blog_post=blog_post)
 
-    # renders individual user's blog entries list
     if blog_user:
         user = User.query.filter_by(username=blog_user).first()
         blog_post = Blog.query.filter_by(owner=user).all()
-        return render_template('singleUser.html', title="User's Blog", blog_post=blog_post, username=blog_user)
+        return render_template('singleUser.html', 
+        title="User's Blog", 
+        blog_post=blog_post, 
+        username=blog_user)
     
-    # renders all posts on main page
     else:
         blog_post = Blog.query.all()
     return render_template('blog.html', title="Build a Blog", blog_post=blog_post)
-
-'''
-@app.route('/blog')
-def blog():
-    blog_id = request.args.get('id')
-    user_id = request.args.get('userid')
-    
- 
-    if id is None:
-        blogs = Blog.query.all()
-        return render_template('blog.html', blogs=blogs)
-    else:
-        single_post = Blog.query.filter_by(id=id).first()
-        print(single_post.title,single_post.body)
-    return render_template('single_post.html', single_post=single_post)'''
 
 
 @app.route('/newpost', methods=['POST', 'GET'])
@@ -126,7 +111,7 @@ def login():
             flash('Logged in!')
             return redirect ('/newpost')
         else:
-            flash('Error!', 'error')
+            flash('Password is incorrect, or user does not exist', 'error')
             return render_template('login.html')
 
     return render_template('login.html')
@@ -181,7 +166,7 @@ def signup():
             session['username'] = username
             return redirect('/newpost')
         else:
-           user_error = 'Username already taken'
+           flash('Username already exists', 'error')
     
     return render_template('signup.html')
 
