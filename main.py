@@ -14,7 +14,7 @@ class Blog(db.Model):
 
     id = db.Column(db.Integer,primary_key=True)
     title = db.Column(db.String(120))
-    body = db.Column(db.String(120))
+    body = db.Column(db.String(500))
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __init__(self, title, body, owner):
@@ -68,7 +68,7 @@ def blog():
     
     else:
         blog_post = Blog.query.all()
-    return render_template('blog.html', title="Build a Blog", blog_post=blog_post)
+    return render_template('blog.html', title="Blogz", blog_post=blog_post)
 
 
 @app.route('/newpost', methods=['POST', 'GET'])
@@ -94,6 +94,7 @@ def new_post():
             db.session.add(new_post)
             db.session.commit()
             id = new_post.id
+            flash('Blog has been posted!!', 'success')
             return redirect('/blog?id='+ str(id))
     
     return render_template('newpost.html')
@@ -111,7 +112,7 @@ def login():
 
         if user and user.password == password:
             session['username'] = username
-            flash(username + 'Logged in!')
+            flash(username + ' Logged in!')
             return redirect ('/newpost')
         else:
             if blank(username):

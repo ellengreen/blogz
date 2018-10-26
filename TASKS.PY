@@ -4,11 +4,10 @@
 #User enters username stored in database with correct password 
     #Redirects to /newpost page 
     #Username stored in a session
-User enters username stored in database with incorrect password
-    Error message for invalid password
-    ***DO ERROR NOT FLASH**
-User enters username not in database
-    Redirects to login with error message
+#User enters username stored in database with incorrect password
+    #Error message for invalid password
+#User enters username not in database
+    #Redirects to login with error message
 #User doesn't have account, clicks "Create Account"
     #Redirects to '/signup'
 
@@ -26,7 +25,7 @@ User enters username not in database
 #After valid new post while logged in, redirect to page featuring that single_post
 #'/blog' shows list of all entries by all users
     #Click on entry, redirect to single_post page showing just that entry
-Logout redirects to '/blog' 
+#Logout redirects to '/blog' 
     #'/newpost' redirects to '/login'
 #Create page to dynamically display posts of each individual user
     #Written with 'userid' with hyperlink to 'blog?user=userid'
@@ -42,7 +41,7 @@ Lucas Recommendations
 #Add CSS & Bootstrap
 #Use bootstrap on navbar and div separation
 #Hide "new post" and "logout" if not logged in
-Add 'Blog has been posted' success banner when applicable
+#Add 'Blog has been posted' success banner when applicable
 Add Edit/Remove button to user ONLY FOR THEIR BLOGS
 
 
