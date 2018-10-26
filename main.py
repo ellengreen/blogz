@@ -43,7 +43,7 @@ def require_login():
 
 @app.route('/')
 def index():
-
+    
     users = User.query.all()
     return render_template('index.html', users=users)
 
@@ -51,6 +51,7 @@ def index():
 def blog():
     blog_id = request.args.get('id')
     blog_user = request.args.get('user')
+    
 
     if blog_id:
         blog_post = Blog.query.filter_by(id=blog_id).first()

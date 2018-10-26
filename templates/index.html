@@ -9,7 +9,7 @@
         {% for user in users %}
 
         <div class="jumbotron text-center">
-          <p class="users">{{ user.username }}</p>
+          <p class="users"><a href="/blog?user={{user.username}}">{{ user.username }}</p>
         </div>
 
         {% endfor %}
@@ -17,3 +17,5 @@
       </div>
       
 {% endblock %}
+
+
