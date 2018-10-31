@@ -1,13 +1,12 @@
 from flask import Flask, request, redirect, render_template, session, flash
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import desc
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://blogz:ellen@localhost:8889/blogz'
 app.config['SQLALCHEMY_ECHO'] = True
 db = SQLAlchemy(app) 
-app.secret_key = 'thisisasecretkey'
+app.secret_key = '1234567890'
 
 class Blog(db.Model):
 
@@ -33,18 +32,19 @@ class User(db.Model):
         self.password = password
 
 
+@app.route('/')
+def index():
+    
+    users = User.query.all()
+    return render_template('index.html', users=users)
+
+
 @app.before_request
 def require_login():
     allowed_routes = ['login', 'signup', 'blog', 'single_post', 'index']
     if request.endpoint not in allowed_routes and 'username' not in session:
         return redirect('/login')
 
-
-@app.route('/')
-def index():
-    
-    users = User.query.all()
-    return render_template('index.html', users=users)
 
 @app.route('/blog')
 def blog():
@@ -56,34 +56,7 @@ def blog():
     
     return render_template('blog.html', blog_post=blog_post)    
 
-@app.route('/newpost', methods=['POST', 'GET'])
-def new_post():
 
-    if request.method == 'POST':
-        title = request.form['title']
-        body = request.form['body']
-        owner = User.query.filter_by(username=session['username']).first()
-
-
-        title_error = ""
-        body_error = ""
-
-        if blank(title):
-            title_error = "Must add a title"
-            return render_template('newpost.html',title_error=title_error, body_error=body_error)
-        if blank(body):
-            body_error = "Must add some text to the body"
-            return render_template('newpost.html',title_error=title_error, body_error=body_error)
-       
-        else:
-            new_post = Blog(title, body, owner)
-            db.session.add(new_post)
-            db.session.commit()
-            id = new_post.id
-            flash('Blog has been posted!!', 'success')
-            return redirect('/blog?id='+ str(id))
-    
-    return render_template('newpost.html')
 
 
 @app.route('/login', methods=['POST', 'GET'])
@@ -172,6 +145,33 @@ def signup():
     
     return render_template('signup.html')
 
+@app.route('/newpost', methods=['POST', 'GET'])
+def new_post():
+
+    if request.method == 'POST':
+        title = request.form['title']
+        body = request.form['body']
+        owner = User.query.filter_by(username=session['username']).first()
+
+        title_error = ""
+        body_error = ""
+
+        if blank(title):
+            title_error = "You gotta have a title"
+            return render_template('newpost.html',title_error=title_error, body_error=body_error)
+        if blank(body):
+            body_error = "Add some text to the body"
+            return render_template('newpost.html',title_error=title_error, body_error=body_error)
+       
+        else:
+            new_post = Blog(title, body, owner)
+            db.session.add(new_post)
+            db.session.commit()
+            id = new_post.id
+            flash('New blog has been posted!!', 'success')
+            return redirect('/blog?id='+ str(id))
+    
+    return render_template('newpost.html')
 
 @app.route('/logout')
 def logout():
