@@ -9,7 +9,6 @@ app.config['SQLALCHEMY_ECHO'] = True
 db = SQLAlchemy(app) 
 app.secret_key = 'thisisasecretkey'
 
-
 class Blog(db.Model):
 
     id = db.Column(db.Integer,primary_key=True)
@@ -49,28 +48,13 @@ def index():
 
 @app.route('/blog')
 def blog():
-    blog_id = request.args.get('id')
-    blog_user = request.args.get('user')
+    if request.args.get("blog"):
+        blog = Blog.query.get(request.args.get("blog"))
+        return render_template('single_post.html', blog=blog)
+  
+    blog_post = Blog.query.all()
     
-
-    if blog_id:
-        blog_post = Blog.query.filter_by(id=blog_id).first()
-        return render_template('single_post.html', 
-        title="Blog Entry", 
-        blog_post=blog_post)
-
-    if blog_user:
-        user = User.query.filter_by(username=blog_user).first()
-        blog_post = Blog.query.filter_by(owner=user).all()
-        return render_template('singleUser.html', 
-        title="User's Blog", 
-        blog_post=blog_post, 
-        username=blog_user)
-    
-    else:
-        blog_post = Blog.query.all()
-    return render_template('blog.html', title="Blogz", blog_post=blog_post)
-
+    return render_template('blog.html', blog_post=blog_post)    
 
 @app.route('/newpost', methods=['POST', 'GET'])
 def new_post():
@@ -90,6 +74,7 @@ def new_post():
         if blank(body):
             body_error = "Must add some text to the body"
             return render_template('newpost.html',title_error=title_error, body_error=body_error)
+       
         else:
             new_post = Blog(title, body, owner)
             db.session.add(new_post)
